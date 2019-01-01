@@ -1,4 +1,5 @@
-package tempdb
+// Package tempdb allows you to quickly create fresh throw-away databases for testing
+package tempdb // import "bou.ke/tempdb"
 
 import (
 	"database/sql"
