@@ -16,14 +16,15 @@ func New() (*sql.DB, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	cmd := exec.Command("initdb", "--nosync", dir)
+	cmd := exec.Command("initdb", "--nosync", "--auth=trust", dir)
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = ioutil.Discard
 	if err = cmd.Run(); err != nil {
 		os.RemoveAll(dir)
 		return nil, nil, err
 	}
-	cmd = exec.Command("postgres", "-F", "--unix_socket_directories="+dir, "--listen_addresses=\"\"", "-D", dir)
+
+	cmd = exec.Command("postgres", "-F", "-c", "unix_socket_directories="+dir, "-D", dir, "-c", "listen_addresses=")
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = ioutil.Discard
 	if err = cmd.Start(); err != nil {
