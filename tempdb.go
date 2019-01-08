@@ -5,12 +5,15 @@ import (
 	"database/sql"
 	"fmt"
 
+	"bou.ke/tempdb/mysql"
 	"bou.ke/tempdb/postgres"
 	"bou.ke/tempdb/sqlite3"
 )
 
 func New(driver string) (*sql.DB, func(), error) {
 	switch driver {
+	case "mysql":
+		return mysql.New()
 	case "postgres":
 		return postgres.New()
 	case "sqlite3":

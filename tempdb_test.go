@@ -4,19 +4,19 @@ import (
 	"database/sql"
 	"testing"
 
-	"gopkg.in/stretchr/testify.v1/assert"
+	"gopkg.in/stretchr/testify.v1/require"
 )
 
 func TestAll(t *testing.T) {
 	for _, driver := range sql.Drivers() {
 		t.Run(driver, func(t *testing.T) {
 			db, cleanup, err := New(driver)
-			assert.NoError(t, err)
+			require.NoError(t, err)
 			defer cleanup()
 			row := db.QueryRow("SELECT 123")
 			var n int
-			assert.NoError(t, row.Scan(&n))
-			assert.Equal(t, 123, n)
+			require.NoError(t, row.Scan(&n))
+			require.Equal(t, 123, n)
 		})
 	}
 }
