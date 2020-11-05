@@ -1,4 +1,4 @@
-module bou.ke/testdb
+module bou.ke/tempdb
 
 go 1.15
 
